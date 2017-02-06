@@ -6,5 +6,6 @@ thread.h
 
 lib_LTLIBRARIES = libthread.la
 libthread_la_SOURCES = \
+ncpu.c \
 sleep.c \
 thread.c

@@ -34,7 +34,7 @@ long wait(int id) {
     if (active != id) {
       error = 1;
     }
-    sleep(1);
+    thread_sleep(1);
     cnt--;
   } while (cnt != 0);
   return cnt;
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
   worker(1);
   worker(8);
 
-  sleep(100);
+  thread_sleep(100);
 
   if (error == 0) {
     printf ("No threading\n");
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
   worker(1);
   worker(8);
 
-  sleep(100);
+  thread_sleep(100);
 
   if (error != 0) {
     printf ("No mutex\n");

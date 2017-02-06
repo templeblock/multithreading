@@ -1,9 +1,7 @@
-/* sleep.c (Threading) */
-
 /***********************************************************************
 *  This code is part of ...
 *
-*  Copyright (C) 2011 Heinrich Schuchardt (xypron.glpk@gmx.de)
+*  Copyright (C) 2017 Heinrich Schuchardt (xypron.glpk@gmx.de)
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -19,28 +17,33 @@
 ***********************************************************************/
 
 /**
- * @file sleep.c
- * @brief Sleep function.
+ * @file ncpu.c
+ * @brief Gets number of cpus.
  *
  */
 
 #include "thread.h"
-#include <time.h>
 
 /**
- * @brief Let thread sleep.
- * @param msecs duration in milliseconds
+ * @brief Gets number of cpus.
  */
-#ifdef SQLWIN
-void thread_sleep(long msecs) {
-  Sleep((DWORD) msecs);
+#ifdef __WOE__
+
+#include <windows.h>
+#pragma comment(lib, "user32.lib")
+
+int ncpu() {
+	SYSTEM_INFO info;
+
+	GetSystemInfo(&info);
+	return info.dwNumberOfProcessors
 }
 #else
-void thread_sleep(long msecs) {
-  struct timespec ts;
-  ts.tv_sec = msecs / 1000;
-  ts.tv_nsec = 1000000 * (msecs % 1000);
-  nanosleep(&ts, NULL);
+
+#include <unistd.h>
+
+int ncpu() {
+  return sysconf(_SC_NPROCESSORS_ONLN);
 }
 #endif
 

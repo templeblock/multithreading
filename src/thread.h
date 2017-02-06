@@ -26,6 +26,10 @@
 #include "config.h"
 #endif // HAVE_CONFIG_H
 
+int thread_ncpu(void);
+
+void thread_sleep(long msecs);
+
 #ifdef __WOE__
 #include <windows.h>
 typedef CRITICAL_SECTION pthread_mutex_t;
