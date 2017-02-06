@@ -1,5 +1,7 @@
+/* testthread.c (Thread) */
+
 /***********************************************************************
-*  This code is part of ...
+*  This code is part of the multithreading libarary.
 *
 *  Copyright (C) 2017 Heinrich Schuchardt (xypron.glpk@gmx.de)
 *
@@ -16,34 +18,18 @@
 *  limitations under the License.
 ***********************************************************************/
 
-/**
- * @file ncpu.c
- * @brief Gets number of cpus.
- *
- */
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "thread.h"
 
-/**
- * @brief Gets number of cpus.
- */
-#ifdef __WOE__
+int main(int argc, char *argv[]) {
+  int n;
+ 
+  n = thread_ncpu();
+  printf("Number of cpus: %d\n", n);
 
-#include <windows.h>
-#pragma comment(lib, "user32.lib")
+  if (n < 1 || n > 4096)
+  	exit(EXIT_FAILURE);
 
-int thread_ncpu() {
-	SYSTEM_INFO info;
-
-	GetSystemInfo(&info);
-	return info.dwNumberOfProcessors
+  exit(EXIT_SUCCESS);
 }
-#else
-
-#include <unistd.h>
-
-int thread_ncpu() {
-  return sysconf(_SC_NPROCESSORS_ONLN);
-}
-#endif
-
